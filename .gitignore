@@ -1,0 +1,13 @@
+# Sensitive Info
+.env
+chase_session.json
+
+# Dependencies
+node_modules/
+
+# Artifacts
+screenshots/
+*.pdf
+
+# Logs
+*.txt

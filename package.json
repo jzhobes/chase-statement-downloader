@@ -1,0 +1,28 @@
+{
+  "name": "chase-statement-downloader",
+  "version": "1.0.0",
+  "description": "Automated Chase Bank statement downloader",
+  "main": "chaseAutoDownloader.js",
+  "scripts": {
+    "start": "node chaseAutoDownloader.js",
+    "bulk": "node chaseAutoDownloader.js --bulk",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "playwright": "^1.57.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-playwright": "^2.4.0",
+    "prettier": "^3.7.4"
+  }
+}
