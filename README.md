@@ -1,13 +1,14 @@
 # Chase Statement Downloader 🚀
 
-Automated Playwright script to download monthly credit card statements from Chase Bank. Supports both latest statement retrieval and bulk archival (up to 7 years).
+Automated Playwright script to download monthly credit card statements from Chase Bank. Supports year-by-year retrieval and bulk archival.
 
 ## Features
 
 - 🔐 **Session Persistence**: Saves cookies to `chase_session.json` to reduce MFA frequency.
 - 📱 **MFA Ready**: Handles "Confirm in Mobile App" identity verification flow.
 - 📂 **Auto-Organization**: Sorts PDFs into `Chase-{accountMask}` folders.
-- 🔄 **Bulk Mode**: Scans history from `CURRENT_YEAR_MINUS_1` through `CURRENT_YEAR_MINUS_7`.
+- 📅 **Year Selection**: Downloads every statement from `CURRENT_YEAR` through `CURRENT_YEAR_MINUS_7`.
+- 🔄 **Bulk Mode**: Scans `CURRENT_YEAR` through `CURRENT_YEAR_MINUS_7`.
 - ⚡ **Smart Skipping**: Won't re-download PDFs that already exist locally.
 
 ## Setup
@@ -24,30 +25,67 @@ Automated Playwright script to download monthly credit card statements from Chas
 
 ## Usage
 
-### Latest Statements
-
-Downloads the most recent statement for every found credit card (type 'BAC'):
+Build the TypeScript source first:
 
 ```bash
-node chaseAutoDownloader.js
+npm run build
+```
+
+### Current Year
+
+Downloads every current-year statement for every found credit card (type 'BAC'):
+
+```bash
+npm start
+```
+
+By default, the browser runs headed so Chase sees a session closer to a normal manual login.
+To run headless:
+
+```bash
+HEADLESS=true npm start
+```
+
+### Specific Year
+
+Pass a year offset from `1` through `7`. For example, this downloads every statement from `CURRENT_YEAR_MINUS_1`:
+
+```bash
+npm start -- 1
+```
+
+This downloads every statement from `CURRENT_YEAR_MINUS_7`:
+
+```bash
+npm start -- 7
 ```
 
 ### Bulk Archive
 
-Iterates through the last 7 years of history for all cards:
+Downloads every statement from `CURRENT_YEAR` through `CURRENT_YEAR_MINUS_7`:
 
 ```bash
-node chaseAutoDownloader.js --bulk
+npm run bulk
+```
+
+Headless bulk mode:
+
+```bash
+HEADLESS=true npm run bulk
 ```
 
 ## Development
 
+- **Run without building**: `npm run dev` or `npm run dev:bulk`
+- **Build**: `npm run build`
+- **Type Checking**: `npm run typecheck`
 - **Linting**: `npm run lint`
 - **Formatting**: `npm run format`
 - **Screenshots**: Check the `screenshots/` directory for visual debugging after a run.
 
 ## Tech Stack
 
+- TypeScript
 - [Playwright](https://playwright.dev/)
 - [Dotenv](https://github.com/motdotla/dotenv)
 - Node.js

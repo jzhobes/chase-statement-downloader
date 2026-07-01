@@ -2,27 +2,40 @@
   "name": "chase-statement-downloader",
   "version": "1.0.0",
   "description": "Automated Chase Bank statement downloader",
-  "main": "chaseAutoDownloader.js",
+  "main": "dist/chaseAutoDownloader.js",
   "scripts": {
-    "start": "node chaseAutoDownloader.js",
-    "bulk": "node chaseAutoDownloader.js --bulk",
-    "lint": "eslint .",
-    "format": "prettier --write ."
+    "build": "tsc",
+    "check": "npm run typecheck && npm run lint && npm run format:check",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/chaseAutoDownloader.js",
+    "bulk": "node dist/chaseAutoDownloader.js --bulk",
+    "dev": "tsx src/chaseAutoDownloader.ts",
+    "dev:bulk": "tsx src/chaseAutoDownloader.ts --bulk",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "dotenv": "^17.2.3",
-    "playwright": "^1.57.0"
+    "dotenv": "^17.4.2",
+    "playwright": "^1.61.1"
   },
   "devDependencies": {
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-base": "^15.0.0",
+    "@eslint/css": "^1.3.0",
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^2.0.0",
+    "@eslint/markdown": "^8.0.2",
+    "@types/node": "^26.0.1",
+    "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-playwright": "^2.4.0",
-    "prettier": "^3.7.4"
+    "eslint-plugin-playwright": "^2.10.4",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.4",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.1"
   }
 }

@@ -4,6 +4,7 @@ chase_session.json
 
 # Dependencies
 node_modules/
+dist/
 
 # Artifacts
 screenshots/
