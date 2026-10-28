@@ -1,6 +1,6 @@
 export type ChaseApiMethod = 'GET' | 'POST';
 export type DateFilter = 'CURRENT_YEAR' | `CURRENT_YEAR_MINUS_${number}`;
-export type NavigationResult = 'login' | 'dashboard' | 'timeout';
+export type NavigationResult = 'login' | 'dashboard' | 'unsupported-browser' | 'timeout';
 
 export interface ChaseApiOptions {
   method?: ChaseApiMethod;
@@ -20,27 +20,9 @@ export interface CreditCardAccount {
   type: 'BAC';
 }
 
-export interface MenuListResponse {
-  items?: MenuItem[];
-}
-
 export interface DocRef {
   documentDate: string;
   documentId: string;
-}
-
-export interface StatementListResponse {
-  idaldocRefs?: DocRef[];
-}
-
-export interface DocKeyRef {
-  docKey?: string;
-}
-
-export interface DocKeyResponse {
-  csrftoken?: string;
-  docKey?: string;
-  idaldockeyRefs?: DocKeyRef[];
 }
 
 declare global {

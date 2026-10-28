@@ -1,5 +1,7 @@
 # Sensitive Info
 .env
+.env.*
+!.env.example
 chase_session.json
 
 # Dependencies
@@ -8,7 +10,9 @@ dist/
 
 # Artifacts
 screenshots/
+statements/
 *.pdf
+*.part
 
 # Logs
 *.txt

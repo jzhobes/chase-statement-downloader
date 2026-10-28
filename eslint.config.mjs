@@ -1,6 +1,5 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
-import playwright from 'eslint-plugin-playwright';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -22,9 +21,6 @@ export default tseslint.config(
         __dirname: 'readonly',
       },
     },
-    plugins: {
-      playwright,
-    },
     rules: {
       'no-await-in-loop': 'off',
       'no-console': 'off',
@@ -33,4 +29,9 @@ export default tseslint.config(
     },
   },
   prettier,
+  {
+    rules: {
+      curly: ['error', 'all'],
+    },
+  },
 );

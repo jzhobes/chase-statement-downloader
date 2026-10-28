@@ -1,91 +1,61 @@
 # Chase Statement Downloader 🚀
 
-Automated Playwright script to download monthly credit card statements from Chase Bank. Supports year-by-year retrieval and bulk archival.
+A personal tool for downloading monthly Chase credit card statements with Playwright. Download one year or archive all available statements from the current year through seven years back.
 
-## Features
+Built for Chase’s personal online banking experience. Business cards and Chase Business Online profiles, including linked personal accounts, are outside the supported scope.
 
-- 🔐 **Session Persistence**: Saves cookies to `chase_session.json` to reduce MFA frequency.
-- 📱 **MFA Ready**: Handles "Confirm in Mobile App" identity verification flow.
-- 📂 **Auto-Organization**: Sorts PDFs into `Chase-{accountMask}` folders.
-- 📅 **Year Selection**: Downloads every statement from `CURRENT_YEAR` through `CURRENT_YEAR_MINUS_7`.
-- 🔄 **Bulk Mode**: Scans `CURRENT_YEAR` through `CURRENT_YEAR_MINUS_7`.
-- ⚡ **Smart Skipping**: Won't re-download PDFs that already exist locally.
+This is an unofficial tool with no affiliation with Chase. Changes to Chase’s website may break it. Maintenance is best effort.
 
 ## Setup
 
-1. Clone the repository and install dependencies:
-   ```bash
-   npm install
-   ```
-2. Create a `.env` file in the root:
-   ```env
-   USERNAME=your_username
-   PASSWORD=your_password
-   ```
+Install [Bun](https://bun.sh/) 1.4.4 or later, clone the repository, and install the dependencies and Chromium:
+
+```bash
+bun install
+bunx --bun playwright install chromium
+```
+
+Copy the environment template and fill in your Chase credentials in `.env`:
+
+```bash
+cp .env.example .env
+```
 
 ## Usage
 
-Build the TypeScript source first:
+Run commands from the project root. The browser is visible by default so you can complete verification when needed.
+
+| Command           | Downloads                                           |
+| ----------------- | --------------------------------------------------- |
+| `bun run start`   | Current year                                        |
+| `bun run start 1` | Previous year; accepts offsets from `1` through `7` |
+| `bun run bulk`    | Current year through seven years back               |
+
+To run without a visible browser:
 
 ```bash
-npm run build
+HEADLESS=true bun run bulk
 ```
 
-### Current Year
+Statements are saved to `statements/Chase-{accountMask}/`. Completed PDFs are skipped on subsequent runs. If multiple documents share a date, their filenames include a document fingerprint to keep them separate. Session cookies are saved to reduce repeated logins and MFA.
 
-Downloads every current-year statement for every found credit card (type 'BAC'):
+## Troubleshooting
 
-```bash
-npm start
-```
+- If headless mode fails, check `screenshots/error_state.png` and retry with `HEADLESS=false`.
+- If a saved session cannot be loaded, delete `chase_session.json` and sign in again.
+- Set `DEBUG_MFA=true` in `.env` for extra verification diagnostics.
+- If downloads fail, check the final summary and rerun the same command to retry.
 
-By default, the browser runs headed so Chase sees a session closer to a normal manual login.
-To run headless:
-
-```bash
-HEADLESS=true npm start
-```
-
-### Specific Year
-
-Pass a year offset from `1` through `7`. For example, this downloads every statement from `CURRENT_YEAR_MINUS_1`:
-
-```bash
-npm start -- 1
-```
-
-This downloads every statement from `CURRENT_YEAR_MINUS_7`:
-
-```bash
-npm start -- 7
-```
-
-### Bulk Archive
-
-Downloads every statement from `CURRENT_YEAR` through `CURRENT_YEAR_MINUS_7`:
-
-```bash
-npm run bulk
-```
-
-Headless bulk mode:
-
-```bash
-HEADLESS=true npm run bulk
-```
+Keep `.env`, `chase_session.json`, screenshots, and statements private. They are excluded from Git. Screenshots may contain account information or verification codes and can be overwritten on later runs.
 
 ## Development
 
-- **Run without building**: `npm run dev` or `npm run dev:bulk`
-- **Build**: `npm run build`
-- **Type Checking**: `npm run typecheck`
-- **Linting**: `npm run lint`
-- **Formatting**: `npm run format`
-- **Screenshots**: Check the `screenshots/` directory for visual debugging after a run.
+- Run all checks: `bun run check`
+- Run offline tests: `bun run test`
+- Check types: `bun run typecheck`
+- Lint: `bun run lint`
+- Format: `bun run format`
 
-## Tech Stack
+## License
 
-- TypeScript
-- [Playwright](https://playwright.dev/)
-- [Dotenv](https://github.com/motdotla/dotenv)
-- Node.js
+[ISC](LICENSE)
